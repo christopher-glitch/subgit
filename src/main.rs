@@ -96,5 +96,26 @@ fn main() -> Result<(), ()> {
         }
     }
 
+    if args[1] == "add" {
+        if !Path::new("./.subgit/index").exists() {
+            eprintln!("Error: please run subgit init.");
+            return Err(());
+        }
+
+        if args.len() != 3 {
+            eprintln!("Error: please specify a file path.");
+            return Err(());
+        }
+
+        let filepath = &args[2];
+        match git_command::git_add::git_add(filepath) {
+            Ok(()) => {}
+            Err(e) => {
+                eprintln!("Error: {}", e);
+                return Err(());
+            }
+        }
+    }
+
     return Ok(());
 }
