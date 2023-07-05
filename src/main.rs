@@ -25,6 +25,7 @@ fn main() -> Result<(), ()> {
         }
 
         if args.len() != 3 {
+            eprintln!("Error: please specify a file path.");
             return Err(());
         }
 
@@ -45,11 +46,48 @@ fn main() -> Result<(), ()> {
         }
 
         if args.len() != 3 {
+            eprintln!("Error: please specify a hash code.");
             return Err(());
         }
 
         let filehash = &args[2];
         match git_command::git_catfile::git_catfile(filehash) {
+            Ok(()) => {}
+            Err(e) => {
+                eprintln!("Error: {}", e);
+                return Err(());
+            }
+        }
+    }
+
+    if args[1] == "update-index" {
+        if !Path::new("./.subgit/index").exists() {
+            eprintln!("Error: please run subgit init.");
+            return Err(());
+        }
+
+        if args.len() != 3 {
+            eprintln!("Error: please specify a file path.");
+            return Err(());
+        }
+
+        let filepath = &args[2];
+        match git_command::git_updateid::git_update_index(filepath) {
+            Ok(()) => {}
+            Err(e) => {
+                eprintln!("Error: {}", e);
+                return Err(());
+            }
+        }
+    }
+
+    if args[1] == "ls-files" {
+        if !Path::new("./.subgit/index").exists() {
+            eprintln!("Error: please run subgit init.");
+            return Err(());
+        }
+
+        match git_command::git_lsfile::git_ls_files() {
             Ok(()) => {}
             Err(e) => {
                 eprintln!("Error: {}", e);
