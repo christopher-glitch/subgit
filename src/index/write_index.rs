@@ -2,14 +2,7 @@ use std::{path::PathBuf, fs::File, os::unix::prelude::MetadataExt, io::{Read, Wr
 
 use sha1::{Sha1, Digest};
 
-pub fn padding(name_size: usize) -> usize {
-	
-	let size_ctime_to_namesize = 38;
-
-  let remainder = (name_size + size_ctime_to_namesize) % 8;
-  let padding = 8 - remainder;
-  return padding;
-}
+use crate::util::padding::padding;
 
 fn create_entry(name: &str) -> Result<Vec<u8>, String> {
 

@@ -4,6 +4,7 @@ pub mod git_catfile;
 pub mod git_updateid;
 pub mod git_lsfile;
 pub mod git_add;
-
-pub mod util;
-pub mod parameter;
+pub mod git_commit_tree;
+pub mod git_updateref;
+pub mod git_commit;
+pub mod git_write_tree;

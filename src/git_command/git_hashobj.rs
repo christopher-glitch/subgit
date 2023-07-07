@@ -26,6 +26,7 @@ pub fn git_hashobj(filepath: &String) -> Result<(), String>{
 	let blob_hash = Sha1::digest(content.as_bytes());
 
 	println!("hash: {:x}",blob_hash);
+	let hash_str = format!("{:x}",blob_hash);
 
 	let mut encoder = ZlibEncoder::new(Vec::new(), Compression::default());
 	match encoder.write_all(&content.as_bytes()){
@@ -38,7 +39,7 @@ pub fn git_hashobj(filepath: &String) -> Result<(), String>{
 		Err(e) => return Err(e.to_string()),
 	};
 
-	let hash_str = format!("{:x}",blob_hash);
+	
 	let (dir, file) = hash_str.split_at(2);
 	
 	let mut save_path = PathBuf::new();
